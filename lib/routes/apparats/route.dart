@@ -31,7 +31,7 @@ class ApparatRoute {
         } else {
           String content = await utf8.decodeStream(request);
           final data = await repo.getUsersApparats(json.decode(content)['user_id']);
-          resp = data.map((e) => e.toJson()).toString();
+          resp = data.map((e) => e.toJson()).toList().toString();
         }
         break;
       default:

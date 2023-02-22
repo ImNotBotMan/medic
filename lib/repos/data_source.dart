@@ -15,6 +15,7 @@ class MySqlDataSource implements IDataSource {
     connection = await MySQLConnection.createConnection(
       host: 'localhost',
       port: 3306,
+      secure:false,
       userName: 'user',
       password: 'password',
       databaseName: 'medic',

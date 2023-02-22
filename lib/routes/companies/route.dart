@@ -12,7 +12,7 @@ class CompaniesRoute {
     switch (request.method) {
       case 'GET':
         final res = await repo.getCompanies();
-        resp = res.map((e) => e.toJson()).toString();
+        resp = res.map((e) => e.toJson()).toList().toString();
         break;
 
       default:
