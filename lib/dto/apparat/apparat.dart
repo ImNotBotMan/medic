@@ -33,12 +33,15 @@ class ApparatDetails {
 
 class Apparat {
   final String id;
+
+  final String name;
   final String description;
   final String serviceStatus;
   final String isActive;
 
   Apparat({
     required this.id,
+    required this.name,
     required this.description,
     required this.serviceStatus,
     required this.isActive,
@@ -50,11 +53,13 @@ class Apparat {
       'description': description,
       'serviceStatus': serviceStatus,
       'isActive': isActive,
+      "name": name
     };
   }
 
   factory Apparat.fromMap(Map<String, dynamic> map) {
     return Apparat(
+      name: map['name'] as String,
       id: map['id'] as String,
       description: map['description'] as String,
       serviceStatus: map['service_status'] as String,
