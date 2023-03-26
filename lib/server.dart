@@ -5,7 +5,6 @@ import 'package:server/repos/apparats_repo.dart';
 import 'package:server/repos/company_repo.dart';
 import 'package:server/repos/data_source.dart';
 import 'package:server/repos/offer_repo.dart';
-import 'package:server/repos/report_repo.dart';
 import 'package:server/repos/user_repo.dart';
 import 'package:server/routes/apparats/route.dart';
 import 'package:server/routes/companies/route.dart';
@@ -24,7 +23,6 @@ void main() async {
       final userRepo = UserRepo(db);
 
       final offerRepo = OfferRepo(db);
-      final reportRepo = ReportRepo(db);
 
       final userRoute = UserRoute(UserRepo(db));
 
@@ -38,7 +36,6 @@ void main() async {
       final buyOffer = OfferRouteBuy(offerRepo);
       final replaceOffer = OfferRouteReplace(
         repo: offerRepo,
-        reportRepo: reportRepo,
         userRepo: userRepo,
         apparatsRepo: apparatsRepo,
         companyRepo: companyRepo,

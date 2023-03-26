@@ -11,7 +11,6 @@ import 'package:server/dto/user/user.dart';
 import 'package:server/repos/apparats_repo.dart';
 import 'package:server/repos/company_repo.dart';
 import 'package:server/repos/offer_repo.dart';
-import 'package:server/repos/report_repo.dart';
 import 'package:server/repos/user_repo.dart';
 
 class ReportRoute {

@@ -7,7 +7,6 @@ import 'package:server/dto/offers/replace_offer.dart';
 import 'package:server/repos/apparats_repo.dart';
 import 'package:server/repos/company_repo.dart';
 import 'package:server/repos/offer_repo.dart';
-import 'package:server/repos/report_repo.dart';
 import 'package:server/repos/user_repo.dart';
 
 class OfferRouteBuy {
@@ -34,14 +33,12 @@ class OfferRouteBuy {
 class OfferRouteReplace {
   static const String route = 'replace';
   final OfferRepo repo;
-  final ReportRepo reportRepo;
   final UserRepo userRepo;
   final CompanyRepo companyRepo;
   final ApparatsRepo apparatsRepo;
 
   OfferRouteReplace({
     required this.repo,
-    required this.reportRepo,
     required this.userRepo,
     required this.companyRepo,
     required this.apparatsRepo,
@@ -55,16 +52,6 @@ class OfferRouteReplace {
         final offer = ReplaceOfferRequest.fromJson(content);
         await repo.makeReplaceOffer(offer);
 
-        final user = await userRepo.getUserById(offer.userId);
-        final app = await apparatsRepo.getApparatById(offer.apparatId);
-        final company = await companyRepo.getCompanyById(offer.companyId);
-
-        await reportRepo.replaceReport(ReplaceOfferReport(
-          apparat: app,
-          offer: offer,
-          user: user!,
-          company: company!,
-        ));
         resp = 'Заявка создана';
         break;
       default:
