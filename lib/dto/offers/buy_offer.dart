@@ -1,7 +1,38 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-class BuyOfferRequest {
+import 'package:server/dto/offers/base_offer.dart';
+import 'package:server/dto/user/user.dart';
+
+class ButOfferReport implements BaseReport {
+  final BuyOfferRequest offer;
+  final User user;
+
+  ButOfferReport({
+    required this.offer,
+    required this.user,
+  });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'offer': offer.toMap(),
+      'user': user.toMap(),
+    };
+  }
+
+  factory ButOfferReport.fromMap(Map<String, dynamic> map) {
+    return ButOfferReport(
+      offer: BuyOfferRequest.fromMap(map['offer'] as Map<String, dynamic>),
+      user: User.fromMap(map['user'] as Map<String, dynamic>),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ButOfferReport.fromJson(String source) => ButOfferReport.fromMap(json.decode(source) as Map<String, dynamic>);
+}
+
+class BuyOfferRequest implements BaseOffer {
   final String userId;
   String offerTypeID;
   final String additionalId;
@@ -19,7 +50,7 @@ class BuyOfferRequest {
       'user_id': userId,
       'offer_type_id': offerTypeID,
       'additional_offer_data': additionalId,
-      'date_time': dateTime,
+      'date_time': dateTime.toString(),
     };
   }
 
@@ -32,6 +63,7 @@ class BuyOfferRequest {
     );
   }
 
+  @override
   String toJson() => json.encode(toMap());
 
   factory BuyOfferRequest.fromJson(String source) =>

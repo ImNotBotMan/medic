@@ -53,7 +53,7 @@ class Apparat {
       'description': description,
       'serviceStatus': serviceStatus,
       'isActive': isActive,
-      "name": name
+      'name': name
     };
   }
 

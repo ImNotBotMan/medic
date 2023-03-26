@@ -4,7 +4,7 @@ import 'dart:convert';
 class UserRequest {
   final String phone;
   final String password;
-  final String role;
+  final String? role;
 
   UserRequest({
     required this.phone,
@@ -13,14 +13,14 @@ class UserRequest {
   });
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{'phone': phone, 'password': password, 'role': role};
+    return <String, dynamic>{'phone': phone, 'password': password, 'role': role??''};
   }
 
   factory UserRequest.fromMap(Map<String, dynamic> map) {
     return UserRequest(
       phone: map['phone'] as String,
       password: map['password'] as String,
-      role: map['role'] as String,
+      role: map['role'] as String?,
     );
   }
 

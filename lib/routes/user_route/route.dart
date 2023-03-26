@@ -17,7 +17,7 @@ class UserRoute {
         String content = await utf8.decodeStream(request);
         final res = await repo.getUser(UserRequest.fromJson(content));
         if (res == null) {
-          resp = 'Пользователь не найден';
+          throw 'Пользователь не найден';
         } else {
           resp = res.toJson();
         }

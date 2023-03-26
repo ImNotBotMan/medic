@@ -14,4 +14,18 @@ class CompanyRepo {
     }
     return companies;
   }
+
+  Future<Company?> getCompanyById(String id) async {
+    final companies = <Company>[];
+    final dbString = await db.read(
+      'select * from companies where id=:id',
+      {
+        "id": id,
+      },
+    );
+    for (var e in dbString.rows) {
+      companies.add(Company.fromMap(e.assoc()));
+    }
+    return companies.first;
+  }
 }

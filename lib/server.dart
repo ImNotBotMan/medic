@@ -5,10 +5,12 @@ import 'package:server/repos/apparats_repo.dart';
 import 'package:server/repos/company_repo.dart';
 import 'package:server/repos/data_source.dart';
 import 'package:server/repos/offer_repo.dart';
+import 'package:server/repos/report_repo.dart';
 import 'package:server/repos/user_repo.dart';
 import 'package:server/routes/apparats/route.dart';
 import 'package:server/routes/companies/route.dart';
 import 'package:server/routes/offer/route.dart';
+import 'package:server/routes/reports/route.dart';
 import 'package:server/routes/user_route/route.dart';
 import 'package:server/utils/logger.dart';
 
@@ -22,17 +24,29 @@ void main() async {
       final userRepo = UserRepo(db);
 
       final offerRepo = OfferRepo(db);
+      final reportRepo = ReportRepo(db);
 
       final userRoute = UserRoute(UserRepo(db));
 
-      final apparatRoute = ApparatRoute(ApparatsRepo(db), userRepo);
+      final ApparatsRepo apparatsRepo = ApparatsRepo(db);
 
-      final companiesRoute = CompaniesRoute(CompanyRepo(db));
+      final apparatRoute = ApparatRoute(apparatsRepo, userRepo);
+      final companyRepo = CompanyRepo(db);
+
+      final companiesRoute = CompaniesRoute(companyRepo);
 
       final buyOffer = OfferRouteBuy(offerRepo);
-      final replaceOffer = OfferRouteReplace(offerRepo);
+      final replaceOffer = OfferRouteReplace(
+        repo: offerRepo,
+        reportRepo: reportRepo,
+        userRepo: userRepo,
+        apparatsRepo: apparatsRepo,
+        companyRepo: companyRepo,
+      );
       final removeOffer = OfferRouteRemove(offerRepo);
 
+      final reportRoute =
+          ReportRoute(offerRepo: offerRepo, userRepo: userRepo, companyRepo: companyRepo, apparatsRepo: apparatsRepo);
       await for (var request in server) {
         try {
           List<String> segments = request.uri.pathSegments;
@@ -62,6 +76,9 @@ void main() async {
                   break;
                 case ApparatRoute.route:
                   res = await apparatRoute.onRoute(request);
+                  break;
+                case ReportRoute.route:
+                  res = await reportRoute.onRoute(request);
                   break;
                 default:
               }

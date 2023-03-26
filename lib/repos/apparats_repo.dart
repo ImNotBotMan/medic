@@ -6,6 +6,13 @@ class ApparatsRepo {
 
   ApparatsRepo(this.db);
 
+  Future<void> makeCheckApparat(String id) async {
+    await db.write(
+      'update apparats set service_status=1 where id=:id',
+      {"id": id},
+    );
+  }
+
   Future<void> removeApparat(String id) async {
     await db.write(
       'update apparats set isActive=0 where id=:id',
@@ -32,6 +39,4 @@ class ApparatsRepo {
     );
     return Apparat.fromMap(data.rows.first.assoc());
   }
-
-  Future<void> makeApparatCheck() async {}
 }

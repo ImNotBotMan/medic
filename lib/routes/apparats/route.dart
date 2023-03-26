@@ -15,10 +15,17 @@ class ApparatRoute {
     late final String resp;
     switch (request.method) {
       case 'PUT':
-        String content = await utf8.decodeStream(request);
-        await repo.removeApparat(json.decode(content)['id']);
-        resp = 'Выполнено';
-        break;
+        if (request.uri.pathSegments.contains('check')) {
+          String content = await utf8.decodeStream(request);
+          await repo.makeCheckApparat(json.decode(content)['id']);
+          resp = 'Выполнено';
+          break;
+        } else {
+          String content = await utf8.decodeStream(request);
+          await repo.removeApparat(json.decode(content)['id']);
+          resp = 'Выполнено';
+          break;
+        }
       case 'GET':
         if (request.uri.pathSegments.contains('details')) {
           String content = await utf8.decodeStream(request);
@@ -31,7 +38,7 @@ class ApparatRoute {
         } else {
           String content = await utf8.decodeStream(request);
           final data = await repo.getUsersApparats(json.decode(content)['user_id']);
-          resp = data.map((e) => e.toJson()).toString();
+          resp = data.map((e) => e.toJson()).toList().toString();
         }
         break;
       default:
