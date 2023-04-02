@@ -16,8 +16,8 @@ class MySqlDataSource implements IDataSource {
       host: 'localhost',
       port: 3306,
       secure: false,
-      userName: 'root',
-      password: '212001art',
+      userName: 'user',
+      password: 'password',
       databaseName: 'medic',
     );
     await connection.connect();

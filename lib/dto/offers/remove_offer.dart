@@ -28,6 +28,7 @@ class RemoveOfferReport implements BaseReport {
     );
   }
 
+  @override
   String toJson() => json.encode(toMap());
 
   factory RemoveOfferReport.fromJson(String source) =>

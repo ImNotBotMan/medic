@@ -32,6 +32,15 @@ class ApparatsRepo {
     return items;
   }
 
+  Future<List<Apparat>> getAllApparats() async {
+    List<Apparat> items = [];
+    final data = await db.read('select * from apparats', {});
+    for (var e in data.rows) {
+      items.add(Apparat.fromMap(e.assoc()));
+    }
+    return items;
+  }
+
   Future<Apparat> getApparatById(String id) async {
     final data = await db.read(
       'select * from apparats where id=:id',

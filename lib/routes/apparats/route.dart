@@ -35,6 +35,9 @@ class ApparatRoute {
             throw 'No user';
           }
           resp = ApparatDetails(apparat: data, user: user).toJson();
+        } else if (request.uri.pathSegments.contains('admin')) {
+          final data = await repo.getAllApparats();
+          resp = data.map((e) => e.toJson()).toList().toString();
         } else {
           String content = await utf8.decodeStream(request);
           final data = await repo.getUsersApparats(json.decode(content)['user_id']);
