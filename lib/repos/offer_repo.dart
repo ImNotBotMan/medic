@@ -9,6 +9,19 @@ class OfferRepo {
 
   OfferRepo(this.db);
 
+  Future<void> completeReplace(String id) async {
+    await db.write("update offers_replace set isComplete=1 where id=:id; ", {"id": id});
+  }
+
+  Future<List<ReplaceOfferRequest>> getReplace() async {
+    final list = <ReplaceOfferRequest>[];
+    final res = await db.read('select * from offers_replace', {});
+    for (var e in res.rows) {
+      list.add(ReplaceOfferRequest.fromMap(e.assoc()));
+    }
+    return list;
+  }
+
   Future<void> makeReplaceOffer(ReplaceOfferRequest request) async {
     await db.write(
       '''

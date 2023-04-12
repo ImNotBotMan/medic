@@ -47,12 +47,22 @@ class OfferRouteReplace {
   Future<String> onRoute(HttpRequest request) async {
     late final String resp;
     switch (request.method) {
+      case 'GET':
+        final offers = await repo.getReplace();
+        resp = offers.map((e) => e.toJson()).toString();
+        break;
       case 'PUT':
-        String content = await utf8.decodeStream(request);
-        final offer = ReplaceOfferRequest.fromJson(content);
-        await repo.makeReplaceOffer(offer);
+        if (request.uri.pathSegments.contains('complete')) {
+          String content = await utf8.decodeStream(request);
+          await repo.completeReplace(json.decode(content)['id']);
+          resp = 'Выполнено';
+        } else {
+          String content = await utf8.decodeStream(request);
+          final offer = ReplaceOfferRequest.fromJson(content);
+          await repo.makeReplaceOffer(offer);
 
-        resp = 'Заявка создана';
+          resp = 'Заявка создана';
+        }
         break;
       default:
     }

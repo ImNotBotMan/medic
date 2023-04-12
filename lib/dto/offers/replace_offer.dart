@@ -51,10 +51,12 @@ class ReplaceOfferRequest implements BaseOffer {
   final String description;
   final String companyId;
   final DateTime dateTime;
+  final bool? isComplete;
 
   ReplaceOfferRequest({
     required this.userId,
     this.offerTypeId = "2",
+    required this.isComplete,
     required this.apparatId,
     required this.description,
     required this.companyId,
@@ -69,16 +71,19 @@ class ReplaceOfferRequest implements BaseOffer {
       'description': description,
       'company_id': companyId,
       'date_time': dateTime.toString(),
+      'isComplete': isComplete ?? '0'
     };
   }
 
   factory ReplaceOfferRequest.fromMap(Map<String, dynamic> map) {
     return ReplaceOfferRequest(
+      isComplete: (map['isComplete'] as String?) == '1',
       userId: map['user_id'] as String,
       // offerTypeId: map['offer_type_id'] as String,
       apparatId: map['apparat_id'] as String,
       description: map['description'] as String,
       companyId: map['company_id'] as String,
+
       dateTime: DateTime.parse(map['date_time'] as String),
     );
   }
