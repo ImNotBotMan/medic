@@ -47,6 +47,7 @@ class ReplaceOfferReport implements BaseReport {
 class ReplaceOfferRequest implements BaseOffer {
   final String userId;
   String offerTypeId;
+  final String? id;
   final String apparatId;
   final String description;
   final String companyId;
@@ -61,11 +62,13 @@ class ReplaceOfferRequest implements BaseOffer {
     required this.description,
     required this.companyId,
     required this.dateTime,
+    required this.id,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'user_id': userId,
+      "id": id ?? '',
       'offer_type_id': offerTypeId,
       'apparat_id': apparatId,
       'description': description,
@@ -77,6 +80,7 @@ class ReplaceOfferRequest implements BaseOffer {
 
   factory ReplaceOfferRequest.fromMap(Map<String, dynamic> map) {
     return ReplaceOfferRequest(
+      id: map['id'] ?? '',
       isComplete: (map['isComplete'] as String?) == '1',
       userId: map['user_id'] as String,
       // offerTypeId: map['offer_type_id'] as String,
